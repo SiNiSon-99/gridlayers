@@ -192,7 +192,7 @@ function createGridLayout(config) {
             moveLayerToPosition(layer, x, y);
             
             if (config.addLabels) {
-                addLayerLabel(workingDoc, layer.name, x, y + layerHeight + 5);
+                addLayerLabel(workingDoc, layer.name, x, y + layerHeight + 5, layerWidth, layerHeight);
             }
             
         } catch (e) {
@@ -234,7 +234,7 @@ function moveLayerToPosition(layer, x, y) {
     }
 }
 
-function addLayerLabel(doc, labelText, x, y) {
+function addLayerLabel(doc, labelText, x, y, layerWidth, layerHeight) {
     try {
         var textLayer = doc.artLayers.add();
         textLayer.kind = LayerKind.TEXT;
@@ -242,12 +242,14 @@ function addLayerLabel(doc, labelText, x, y) {
         
         var textItem = textLayer.textItem;
         textItem.contents = labelText;
-        textItem.size = UnitValue(16, "px");
-        textItem.position = [UnitValue(x, "px"), UnitValue(y, "px")];
+        textItem.font = "ArialMT";
+        textItem.size = UnitValue(layerHeight * 0.1, "px");
+        textItem.position = [UnitValue(x + (layerWidth / 2), "px"), UnitValue(y, "px")];
+        textItem.fauxBold = true;
         
         var textColor = new SolidColor();
-        textColor.rgb.red = 0;
-        textColor.rgb.green = 0;
+        textColor.rgb.red = 255;
+        textColor.rgb.green = 255;
         textColor.rgb.blue = 0;
         textItem.color = textColor;
         
